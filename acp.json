@@ -1,0 +1,134 @@
+[
+    {
+        "name": "test123",
+        "address": "Vajagadde, Sirsi Taluk, Uttara Kannada district, Karnataka, India",
+        "city": "VAJAGADDE",
+        "state": "Karnataka",
+        "lattitude": 14.631423888251149,
+        "longitude": 74.62463378906251,
+        "chargeType": "CCS1",
+        "ownerName": "",
+        "ownerPhone": ""
+    },
+    {
+        "name": "test122",
+        "address": "Malappattam, Taliparamba, Kannur district, Kerala, 670602, India",
+        "city": "MALAPPATTAM",
+        "state": "Kerala",
+        "lattitude": 12.007084584179259,
+        "longitude": 75.52001953125001,
+        "chargeType": "unknown",
+        "ownerName": "shamil",
+        "ownerPhone": "8727437327"
+    },
+    {
+        "name": "Harryclub",
+        "address": "Valiyaparambu, Chalakkudy, Thrissur, Kerala, 680732, India",
+        "city": "VALIYAPARAMBU",
+        "state": "Kerala",
+        "lattitude": 10.250059987303016,
+        "longitude": 76.278076171875,
+        "chargeType": "unknown",
+        "ownerName": "harry",
+        "ownerPhone": "83712742174"
+    },
+    {
+        "name": "roshak assc",
+        "address": "Nandipura, Biruvalli, Krishnarajapete taluk, Mandya district, Karnataka, 571605, India",
+        "city": "BIRUVALLI",
+        "state": "Karnataka",
+        "lattitude": 12.651058133703483,
+        "longitude": 76.38793945312501,
+        "chargeType": "unknown",
+        "ownerName": "roshak",
+        "ownerPhone": "32434124321"
+    },
+    {
+        "name": "gafoor foods",
+        "address": "Padadka, Putturu taluk, Dakshina Kannada district, Karnataka, 574259, India",
+        "city": "PADADKA",
+        "state": "Karnataka",
+        "lattitude": 12.629618030174845,
+        "longitude": 75.22338867187501,
+        "chargeType": "CCS1",
+        "ownerName": "gafoor",
+        "ownerPhone": "04962555354"
+    },
+    {
+        "name": "Insokuke Home",
+        "address": "Madikeri taluku, Kodagu, Karnataka, India",
+        "city": "CITY INFORMATION NOT AVAILABLE",
+        "state": "Karnataka",
+        "lattitude": 12.388293655609733,
+        "longitude": 75.44311523437501,
+        "chargeType": "J1772 (Type 1)",
+        "ownerName": "mhummaed",
+        "ownerPhone": "2316321653"
+    },
+    {
+        "name": "Jafar building",
+        "address": "Barangaya, Beltangadi taluk, Dakshina Kannada district, Karnataka, India",
+        "city": "BARANGAYA",
+        "state": "Karnataka",
+        "lattitude": 12.913552398609209,
+        "longitude": 75.42663574218751,
+        "chargeType": "unknown",
+        "ownerName": "Jaffer",
+        "ownerPhone": "23523276323"
+    },
+    {
+        "name": "hdysuy",
+        "address": "Kodiyathur Cheruvadi Road, Lakshamveedu Colony, Chullikkaparamb, Kodiyathur, Kozhikode, Kozhikode district, Kerala, 673602, India",
+        "city": "KODIYATHUR",
+        "state": "Kerala",
+        "lattitude": 11.305014428931411,
+        "longitude": 75.99517822265626,
+        "chargeType": "CCS1",
+        "ownerName": "giykhlu",
+        "ownerPhone": "234567"
+    },
+    {
+        "name": "kseb prmbver",
+        "address": "vazhakkulam krishibhavan, Aluva-Perumbavoor Road, Perumbavoor, Kunnathunad, Ernakulam district, Kerala, 683500, India",
+        "city": "PERUMBAVOOR",
+        "state": "Kerala",
+        "lattitude": 10.11214519182517,
+        "longitude": 76.42791323392814,
+        "chargeType": "CCS2",
+        "ownerName": "kseb",
+        "ownerPhone": "1234567890"
+    },
+    {
+        "name": "BURGER SPACE",
+        "address": "Irinjalakuda, Mukundapuram, Thrissur, Kerala, 180121, India",
+        "city": "IRINJALAKUDA",
+        "state": "Kerala",
+        "lattitude": 10.348905970412094,
+        "longitude": 76.20705127716066,
+        "chargeType": "CCS2",
+        "ownerName": "MUKUNDAN UNNI",
+        "ownerPhone": "9654223455"
+    },
+    {
+        "name": "club statiobn",
+        "address": "Koduvally, Thamarassery, Kozhikode district, Kerala, 673572, India",
+        "city": "KODUVALLY",
+        "state": "Kerala",
+        "lattitude": 11.377724055174113,
+        "longitude": 75.92651367187501,
+        "chargeType": "GB\/T",
+        "ownerName": "nithin ",
+        "ownerPhone": "555555555"
+    },
+    {
+        "name": "souhruda club chargepoint",
+        "address": "Aluva, Ernakulam district, Kerala, 683575, India",
+        "city": "CITY INFORMATION NOT AVAILABLE",
+        "state": "Kerala",
+        "lattitude": 10.121949285263774,
+        "longitude": 76.4462184906006,
+        "chargeType": "CCS1",
+        "ownerName": "veneeth",
+        "ownerPhone": "123456789"
+    }
+]

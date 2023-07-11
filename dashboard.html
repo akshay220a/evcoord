@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Ev Charging Station finder</title>
+        <link href="dashboard.css" rel="stylesheet">
+        <!------google icon------>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
+        <!-------routing machine---------------->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+        <!-- Leaflet.markercluster JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+
+            <style>
+            .material-symbols-outlined {
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 400,
+              'GRAD' 0,
+              'opsz' 48
+            }
+            #map{
+                height:100%;
+                width:100%;
+                z-index: 8;
+            }
+
+            /* Customize the marker cluster count label */
+            .marker-cluster span {
+                 font-size: 16px;
+                 font-weight: 600;
+                 color:#343a40;
+
+            }
+            </style>
+    </head>
+    <body>
+
+        <div class="login">
+            <div class="login-header"><h2>Welcome to EV <br>Connect </h2>
+                    </div>
+                    <div class="login-right">
+
+                        <button id="cross-login" onclick="closediv()"><span class="material-symbols-outlined">
+                            close
+                            </span></button>
+                    <div class="login-main">
+                            <h2>LOGIN</h2>
+                        <div class="login-ip"><input type="text" id="user" placeholder="Username or Email" required><span class="material-symbols-outlined">
+                            account_circle
+                            </span></div>
+                        <div class="login-ip"><input id="pass" type="password" placeholder="Password" required><span id="passimg" onclick="togglePassword()" class="material-symbols-outlined">
+                            visibility_off
+                            </span></div>
+                            <p id="login-failed">Username or password is incorrect</p>
+                        <button onclick="login(event)">LOGIN</button>
+                        <a href="#">Forgot Password?</a>
+                        <hr>
+                        <h3>Don't have an account?</h3>
+                        <a href="#">Create an account !</a>
+                        </div>
+                </div>        
+        </div>
+        <div class="dashboard">
+            <div class="notification-bar">
+                <div class="notification-header"><h2>Notification</h2><span class="material-symbols-outlined close-notiication-bar" style="font-weight: 900;font-size: 2em;cursor: pointer;">
+                    close
+                </span></div>
+                <div class="notification-main">
+                    
+                </div>
+            </div>
+            <div class="dashboard-header">
+                <div class="dashboard-header1">
+                    <div class="dashboard-logo">
+                        <img src="images/logo1.png">
+                        <span class="material-symbols-outlined bellicon" style="color: #343a40;font-size: 1.7em;cursor: pointer;padding:30px;">
+                            mark_email_unread
+                        </span>
+                    </div>
+                    <div class="profile">
+                        <ul>
+                            <li>
+                                <label class="darkmode-switch">
+                                    <input type="checkbox" id="darkModeToggle">
+                                    <span class="slider round"></span>
+                                  </label>
+                            </li>
+                            <li style="background-color:#11b99b;color: white;padding: 7px 17px;border-radius: 20px;" onclick="openlogin()">LOGOUT</li>
+                        </ul>
+                        <img src="images/profile.png">
+                    </div>
+                </div>
+                <div class="dashboard-header2">
+                    <ul>
+                        <li style="text-decoration: underline;text-decoration-color: #11b99b;"><a>DASHBOARD</a></li>
+                        <li><a href="add.html">ADD CHARGING-POINT</a></li>
+                        <div>                    
+                            <div class="searchbar">
+                            <input class="" id="location-input" placeholder="Search for Location...">
+                            <div class="erase-btn">
+                                <span onclick="erase()" class="material-symbols-outlined erase">
+                                    backspace
+                                </span>
+                            </div>
+                            </div>
+                            <div id="auto-suggest-list"></div>
+                        </div>
+                    </ul>
+<div style="display: flex;flex-direction: row;align-items: center;position: absolute;right:20px">
+    <div class="show-reports">
+        
+    </div>
+    <div  class="show-sidebar">
+        <span onclick="showsidebar()" class="material-symbols-outlined show-sidebar-icon">
+            menu
+        </span>
+    </div>
+</div>
+                </div>
+            </div>
+            <div class="dashboard-footer">
+                <div id="map"></div>
+                <!-------left side bar ------>
+                <div class="left-sidebar">
+                    <div class="filterbar">
+                        <ul>
+                            <li onclick="open1()"><span class="material-symbols-outlined">
+                                filter_alt
+                                </span>Filter<span class="material-symbols-outlined expandicon e1" style="font-weight: 900;">
+                                    expand_more
+                                    </span></li>
+                                    <div class="filterlist">
+                                        <ul class="filterlist-list">
+                                            <li class="filtertype1">Network Filters</li>
+                                            <ul id="list2">
+                                                <div class="a" style="font-size: .8em;">
+                                                <li><input type="checkbox"name="charging-point" id="select-all" onchange="selectAll()" value="">Select All</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="ather">ather</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="power">Tata Power</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Reliance">Reliance</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Zeon">Zeon</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="statiq">statiq</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Volltic">volltic</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Plug n Go">Plug N Go</li>
+                                             
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="KSEB">KSEB</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Relux">ReluxElectric</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="FORUM">FORUM</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="LionCharge">LionCharge</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="aargo">AarPower</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="BPCL">BPCL</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="Charge Zone">ChargeZone</li>
+                                                <li><input type="checkbox" name="charging-point" onclick="filterMarkers()" value="BESCOM">BESCOM</li>
+                                              </div>
+                                              </ul>
+                                            <li class="filtertype2">Rating Filters</li>
+                                            <div class="filter-rating">
+                                                <ul class="filter-rating-list" style="font-size: .8em;font-weight: 600;">
+                                                  <li>
+                                                    <input class="greencheck" name="charging-point-rating" class="filter-checkbox" type="checkbox" onclick="addlayerGreen()">
+                                                    <img src="images/rating-markers/green.png">Above 4<span class="material-symbols-outlined"> star </span>
+                                                  </li>
+                                                  <li>
+                                                    <input class="yellowcheck" name="charging-point-rating" class="filter-checkbox" type="checkbox" onclick="addlayerYellow()">
+                                                    <img src="images/rating-markers/yellow.png">Between 4 <span class="material-symbols-outlined "> star </span> & 3<span class="material-symbols-outlined "> star </span>
+                                                  </li>
+                                                  <li>
+                                                    <input class="darkredcheck" name="charging-point-rating" class="filter-checkbox" type="checkbox" onclick="addlayerDarkRed()">
+                                                    <img src="images/rating-markers/darkred.png">Between 3 <span class="material-symbols-outlined "> star </span> & 2<span class="material-symbols-outlined "> star </span>
+                                                  </li>
+                                                  <li>
+                                                    <input class="redcheck" name="charging-point-rating" class="filter-checkbox" type="checkbox" onclick="addlayerRed()">
+                                                    <img src="images/rating-markers/red.png">Below 2<span class="material-symbols-outlined "> star </span>
+                                                  </li>
+                                                  <li>
+                                                    <input class="bluecheck" name="charging-point-rating" class="filter-checkbox" type="checkbox" onclick="addlayerBlue()">
+                                                    <img src="images/rating-markers/darkblue.png">Not rated<span class="material-symbols-outlined "> star </span>
+                                                  </li>
+                                                </ul>
+                                            </div>
+                                        </ul>
+                                    </div>
+                            <li onclick="open2()"><span class="material-symbols-outlined">
+                                    distance
+                                </span>NEARBY CHARGEPOINTS<span class="material-symbols-outlined expandicon e2"style="font-weight: 900;">
+                                    expand_more
+                                    </span></li>
+                            <div class="nearby-list">
+                                <div class="nearby-turnongps">
+                                    <span class="material-symbols-outlined">
+                                        location_disabled
+                                        </span>
+                                    <h3>You must turn on Location<br>to access see nearby Chargepoints</h3>
+                                    <button onclick="nearby()">TURN ON</button>
+                                </div>
+                            </div>
+                            <h4 class="nearby-list-header" onclick="loadMore()"></h4>
+
+                            <li onclick="open3()"><span class="material-symbols-outlined">
+                                favorite
+                                </span>favorites<span class="material-symbols-outlined expandicon e3"style="font-weight: 900;">
+                                    expand_more
+                                    </span></li>
+                                    <div id="notlogin">    
+                                        <img src="images/profile.png">
+                                    <h3>
+                                        You must have an account & be logged <br>in to save and access favorites
+                                    </h3>
+                                        <div class="notlogin-btns">
+                                            <button  onclick="openlogin()">SIGN UP</button><button onclick="openlogin()">LOGIN</button>
+                                        </div>
+                            </div>
+                            <div class="fav-list"></div>
+                            <li onclick="open4()"><span class="material-symbols-outlined">
+                                location_city
+                                </span>Charging locator<span class="material-symbols-outlined expandicon e4"style="font-weight: 900;">
+                                    expand_more
+                                    </span></li>
+                            <div class="charginglocator">
+                                <div class="charginglocator-refresh">Refresh <span class="material-symbols-outlined refresh">
+                                    refresh
+                                    </span></div>
+                                <select id="stateSelect"><option disabled selected value>Select a State</option></select>
+                                <select id="citySelect"><option disabled selected value>Select a City</option></select>
+                                <button id="submitButton">Submit</button>
+                            </div>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+                 <!-------right side bar ------>
+                <div class="right-sidebar">
+                    <div id="right-btns">
+                        <div style="display: flex;flex-direction: column;align-items: end;">
+                            <div class="gps">
+                                <span class="material-symbols-outlined gpsIcon">
+                                    location_disabled
+                                    </span>
+                            </div>
+                            <div class="redirect">
+                                <span id="redirectIcon" class="material-symbols-outlined gpsIcon">
+                                  Autorenew
+                                </span>
+                              </div>
+                        </div>
+                        <div class="layers">
+                            <div id="layer1"><img src="images/layers/layers.png" ></div>
+                            <div id="layer2">
+                              <div class="title"><p>MAP TYPE</p></div>
+                              <div>
+                                <ul>
+                                    <li><img id="mapdef" onclick="layerdef()" src="images/layers/default.png"><p>Default</p></li>
+                                    <li><img id="mapsat" onclick="layersat()" src="images/layers/satellite.png"><p>Satellite</p></li>
+                              </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+
+                    <div class="right-reportbar">
+                        <div class="reportbar-hero">
+                            <h2 style="padding: 8px;">Reports</h2>
+                            <div class="report-main">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="right-commentbar">
+                        <h2 class="commentbar-header"></h2>
+                        <ul>
+                            <li class="showdirection"><span style="color:rgb(189, 189, 9)" class="material-symbols-outlined">
+                                directions
+                                </span>DIRECTION</li>
+                            <li onclick="addfavourite()"><span style="color:#18d1ae" class="material-symbols-outlined favIcon">
+                                favorite
+                                </span>FAVORITE</li>
+                            <li onclick="cancelreport()" class="report-icon"><span style="color:red" class="material-symbols-outlined">
+                                warning
+                                </span>REPORT</li>
+                            <li onclick="scroll()"><span class="material-symbols-outlined rate">
+                                rate_review
+                                </span>REVIEW</li>
+                        </ul>
+                        <div class="commentbar-main">
+                            <ol>
+                                <li><span class="material-symbols-outlined">
+                                    location_on
+                                    </span><h3 class="point-address"></h3></li>
+                                <li><span class="material-symbols-outlined">
+                                    location_city
+                                    </span><h3 class="point-city"></h3></li>
+                                <li><span class="material-symbols-outlined">
+                                    smartphone
+                                    </span><h3 class="point-number"></h3></li>
+                                <li><span class="material-symbols-outlined">
+                                    star_rate_half
+                                    </span><h3 class="point-rating"></h3></li>
+                                <li><span class="material-symbols-outlined">
+                                    reviews
+                                    </span><h3 class="point-response"></h3></li>
+                            </ol>
+                            <hr>
+                            <div>
+                                <div class="comment-section">
+                                    <div id="rating-container">
+                                        <span  class="rating" data-value="1"></span>
+                                        <span  class="rating" data-value="2"></span>
+                                        <span  class="rating" data-value="3"></span>
+                                        <span  class="rating" data-value="4"></span>
+                                        <span  class="rating" data-value="5"></span>
+                                    </div>
+                                    <button onclick="SubmitCmt()">POST</button>
+                                </div>
+                                <div style="text-align: center;">
+                                    <textarea class="cmt" placeholder="Describe your experience (optional) " id="comment" rows="2"></textarea>
+                                </div>
+                              </div>
+                            <hr>
+                            <!----<h6>Comments & Rating</h6>--->
+                            <div class="cmts"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="popupContainer">
+                    <div class="popup">
+                        <div class="report-popup">
+                            <div class="report-header">
+                                <h2>What issue would you like to report?</h2>
+                            </div>
+                            <div class="report-main">
+                                <ul class="report-list">
+                                    <li id="report1" onclick="report(0)">Defective</li>
+                                    <li id="report2" onclick="report(1)">Station Occupied</li>
+                                    <li id="report3" onclick="report(2)">Station Doesn't Exsist</li>
+                                    <li id="report4" onclick="report(3)">Slow</li>
+                                    <li id="report5" onclick="report(4)">Unhygienic</li>
+                                </ul>
+                            </div>
+                            <div class="report-footer">
+                                <hr>
+                                <button onclick="cancelreport()" class="cancel-btn">Cancel</button>
+                            </div>
+                        </div>
+
+                        <div class="login-popup">
+                            <div class="login-popup-header">
+                                <h2>Login</h2>
+                            </div>
+                            <div class="login-popup-main">
+                                <span class="material-symbols-outlined">
+                                    info
+                                    </span>
+                                <h3>Sorry, you have to be signed-in to access this feature.</h3>
+                            </div>
+                            <div class="login-popup-footer">
+                                <button onclick="cancelreport()">Close</button>
+                                <button onclick="openlogin()" class="login-btn">Login</button>
+                                <button class="signup-btn">Sign-Up</button>
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="dashboard.js"></script>
+    <script src="map.js"></script>
+    <script src="search.js"></script>
+    <script src="marker.js"></script>
+    <script src="routing.js"></script>
+    <script src="nearby.js"></script>
+    <script src="locator.js"></script>
+    <script src="open.js"></script>
+    <script src="filter.js"></script>
+    <script src="afterlogin.js"></script>
+    <script src="cmt.js"></script>
+    <script src="report.js"></script>
+    <script src="gps.js"></script>
+    <script src="filterbyrating.js"></script>
+    <script src="night.js"></script>
+    <script src="showreport.js"></script> 
+    <script>
+        let user = localStorage.getItem('user');
+console.log(user); // Output: John
+    fav();
+    shownotification();
+    </script>
+</html>

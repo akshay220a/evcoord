@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+
+
+<body>
+	
+	<div id="mySidenav" class="sidenav">
+        <p class="logo" style="display: flex;align-items: center;"><span><img src="logo1.png" style="height: 70px;"></span> EVConnect</p>
+      <a href="admindash.html" class="icon-a a"><i class="fa fa-dashboard icons"></i> &nbsp;&nbsp;Dashboard</a>
+      <a href="customers.html"class="icon-a b "><i class="fa fa-users icons"></i> &nbsp;&nbsp;Customers</a>
+      <a href="chargepoints.html"class="icon-a c"><i class="fa fa-list icons"></i> &nbsp;&nbsp;Chargepoints</a>
+      <a href="reports.html"class="icon-a d"><i class="fa fa-shopping-bag icons"></i> &nbsp;&nbsp;Reports</a>
+      <a href="#"class="icon-a d"><i class="fa fa-shopping-bag icons"></i> &nbsp;&nbsp;New Chargepoints</a>
+    
+</div>
+<div id="main">
+
+	<div class="head">
+		<div class="col-div-6">
+<span style="font-size:30px;cursor:pointer; color: black;" class="nav"  >&#9776; New Chargepoints</span>
+<span style="font-size:30px;cursor:pointer; color: black;" class="nav2"  >&#9776; New Chargepoints</span>
+</div>
+	
+	<div class="col-div-6">
+	<div class="profile">
+
+		<img src="images/user.png" class="pro-img" />
+		<p>Zenistsu <span>ADMIN</span></p>
+	</div>
+</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="addchargepoint">
+	<table class="addchargepoint-table">
+		<tr >
+			<th style="border: 1px solid grey;text-align: center;">PointName</th>
+			<th style="border: 1px solid grey;text-align: center;">City</th>
+			<th style="border: 1px solid grey;text-align: center;">Address</th>
+			<th style="border: 1px solid grey;text-align: center;">Type</th>
+			<th style="border: 1px solid grey;text-align: center;">ownerName</th>
+			<th style="border: 1px solid grey;text-align: center;">Phno</th>
+			<th style="border: 1px solid grey;text-align: center;">Accept</th>
+			<th style="border: 1px solid grey;text-align: center;">Reject</th>
+		  </tr>
+	</table>
+</div>
+</div>
+</body>
+<script>
+
+const table4=document.querySelector('.addchargepoint-table');
+	  fetch('acp.json?' + Date.now())
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(location => {
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${location.name}</td><td>${location.City}</td><td>${location.address}</td><td>${location.chargeType}</td><td>${location.ownerName}</td><td>${location.ownerPhone}</td><td id='tick' ><span class="material-symbols-outlined" style="cursor:pointer;" onclick="accept('${location.name}')">
+                            check
+                            </span></td><td id='bin' ><span class="material-symbols-outlined" style="cursor:pointer;" onclick="reject('${location.name}')">
+                            close
+                            </span></td>`;
+
+table4.appendChild(tr);
+	})
+})
+
+
+function reject(idToRemove){
+
+document.cookie = "idToRemove=" + encodeURIComponent(idToRemove);
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	// Do something with the response
+  }
+};
+xhttp.open("POST", "removenew.php", true);
+xhttp.send();
+window.location.href = 'newchargepoints.html';
+}
+
+
+function accept(idToRemove){
+
+document.cookie = "idToRemove=" + encodeURIComponent(idToRemove);
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+	// Do something with the response
+  }
+};
+xhttp.open("POST", "addnew.php", true);
+xhttp.send();
+window.location.href = 'newchargepoints.html';
+}
+
+
+
+</script>
+</html>

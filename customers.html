@@ -1,0 +1,67 @@
+<!Doctype HTML>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+
+
+<body>
+	<div id="mySidenav" class="sidenav">
+        <p class="logo" style="display: flex;align-items: center;"><span><img src="logo1.png" style="height: 70px;"></span> EVConnect</p>
+	  <a href="admindash.html" class="icon-a a"><i class="fa fa-dashboard icons"></i> &nbsp;&nbsp;Dashboard</a>
+	  <a href="#"class="icon-a b "><i class="fa fa-users icons"></i> &nbsp;&nbsp;Customers</a>
+	  <a href="chargepoints.html"class="icon-a c"><i class="fa fa-list icons"></i> &nbsp;&nbsp;Chargepoints</a>
+	  <a href="reports.html"class="icon-a d"><i class="fa fa-shopping-bag icons"></i> &nbsp;&nbsp;Reports</a>
+	  <a href="newchargepoints.html"class="icon-a d"><i class="fa fa-shopping-bag icons"></i> &nbsp;&nbsp;New Chargepoints</a>
+	
+</div>
+<div id="main">
+
+	<div class="head">
+		<div class="col-div-6">
+<span style="font-size:30px;cursor:pointer; color: black;" class="nav"  >&#9776; Customers</span>
+<span style="font-size:30px;cursor:pointer; color: black;" class="nav2"  >&#9776; Customers</span>
+</div>
+	
+	<div class="col-div-6">
+	<div class="profile">
+
+		<img src="images/user.png" class="pro-img" />
+		<p>Zenistsu <span>ADMIN</span></p>
+	</div>
+</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="customers">
+	<table class="customers-table">
+		<tr >
+			<th style="border: 1px solid grey;text-align: center;">Name</th>
+			<th style="border: 1px solid grey;text-align: center;">User Type</th>
+			<th style="border: 1px solid grey;text-align: center;">Phone</th>
+			<th style="border: 1px solid grey;text-align: center;">Reports</th>
+		  </tr>
+	</table>
+</div>
+
+</div>
+</body>
+<script>
+
+const table1=document.querySelector('.customers-table');
+	  fetch('signupdetails.json?' + Date.now())
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(location => {
+
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>${location.user}</td><td>${location.usertype}</td><td>${location.phone}</td><td>${location.report_count}</td>`;
+table1.appendChild(tr);
+	})
+})
+</script>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ev Charging Station finder</title>
+        <link href="dashboard.css" rel="stylesheet">
+        <!------google icon------>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
+        <!-------routing machine---------------->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+        <!-- Leaflet.markercluster JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+
+            <style>
+            .material-symbols-outlined {
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 400,
+              'GRAD' 0,
+              'opsz' 48
+            }
+            #map{
+
+                height:90%;
+                width:95vh;
+                z-index: 8;
+            }
+
+            /* Customize the marker cluster count label */
+            .marker-cluster span {
+                 font-size: 16px;
+                 font-weight: 600;
+                 color:#343a40;
+
+            }
+            .dashboard-footer{
+                background-color: aliceblue;
+                padding: 50px;
+            }
+            </style>
+    </head>
+    <body>     
+
+        <div class="dashboard">
+            <div class="notification-bar">
+                <div class="notification-header"><h2>Notification</h2><span class="material-symbols-outlined close-notiication-bar" style="font-weight: 900;font-size: 2em;cursor: pointer;">
+                    close
+                </span></div>
+                <div class="notification-main">
+                    
+                </div>
+            </div>
+            <div class="dashboard-header">
+                <div class="dashboard-header1">
+                    <div class="dashboard-logo">
+                        <img src="images/logo1.png">
+                    </div>
+                    <div class="profile">
+                        <ul>
+                            <li style="background-color:#11b99b;color: white;padding: 7px 17px;border-radius: 20px;" onclick="openlogin()">LOGOUT</li>
+                        </ul>
+                        <img src="images/profile.png">
+                    </div>
+                </div>
+                <div class="dashboard-header2">
+                    <ul>
+                        <li style="text-decoration: underline;text-decoration-color: #11b99b;"><a>DASHBOARD</a></li>
+                        <li><a href="add.html">ADD CHARGING-POINT</a></li>
+                        <div>                    
+                            <div class="searchbar">
+                            <input class="" id="location-input" placeholder="Search for Location...">
+                            <div class="erase-btn">
+                                <span onclick="erase()" class="material-symbols-outlined erase">
+                                    backspace
+                                </span>
+                            </div>
+                            </div>
+                            <div id="auto-suggest-list"></div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="dashboard-footer">
+                <div id="map"></div>
+                <div class="container-comment"></div>
+                <div class="container-report"></div>
+
+
+
+
+            </div>
+        </div>
+    </body>
+    <script src="dashboard.js"></script>
+    <script src="map.js"></script>
+    <script src="search.js"></script>
+
+    <script>
+        let user = localStorage.getItem('user');
+console.log(user); // Output: John
+    fav();
+    shownotification();
+    </script>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .select-type {
+          width: 100%;
+          height: 50px;
+          padding: 8px;
+          padding-left: 33px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          font-size: 1.1rem;
+	      color: #555;
+	      font-family: 'poppins', sans-serif;
+        }
+        
+        .select-type option {
+          background-color: #ffffff;
+          color: #333;
+        }
+        
+        .select-type option:hover {
+          background-color: #f2f2f2;
+        }
+        
+        .select-type option[selected] {
+          font-weight: bold;
+        }
+        </style>
+        
+</head>
+<body>
+	<img class="wave" src="img/loginpage/wave.png">
+  
+	<div class="container">
+		<div class="img">
+			<img src="img/loginpage/undraw_mobile_login_re_9ntv.svg">
+		</div>
+		<div class="login-content">
+			<form >
+				<img src="img/loginpage/undraw_cat_epte.svg">
+				<h2 class="title">REGISTER</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Username</h5>
+           		   		<input type="text" id="user" class="input" required>
+           		   </div>
+           		</div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                         <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="div">
+                         <h5>Ph No</h5>
+                         <input type="text" id="phno" class="input" pattern="\d{10}" maxlength="10" required>
+                 </div>
+              </div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Password</h5>
+           		    	<input type="password" id='pass' class="input" required>
+            	   </div>
+            	</div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                         <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                         <h5>Re-Enter Password</h5>
+                         <input type="password" id="repass" class="input" required>
+                 </div>
+              </div>
+
+                <select class="select-type">
+                    <option value="normal" disabled selected>Select User Type</option>
+                    <option value="normal">Normal User</option>
+                    <option value="owner">Charging Station Owner</option>
+                </select>
+          
+            	<input type="submit" class="btn" value="sign up">
+
+              
+            	<a href="main.html">GOTO HOME!</a>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+      const btn=document.querySelector('.btn');
+      btn.addEventListener('click',()=>{
+        event.preventDefault();
+        const username = document.getElementById('user').value;
+      const phone = document.getElementById('phno').value;
+      const password = document.getElementById('pass').value;
+      const reenterPassword = document.getElementById('repass').value;
+      const userType = document.querySelector('.select-type').value;
+
+      const phoneNumberPattern = /^[0-9]+$/;
+      if (!phone.match(phoneNumberPattern)) {
+         // Display an error message or take appropriate action
+         alert('Phone number should only contain numbers');
+         return; // Exit the function and prevent further execution
+      }
+
+      const usernamePattern = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
+      if (!password.match(usernamePattern)) {
+         // Display an error message or take appropriate action
+         alert('Password should contain both numbers and alphabets');
+         return; // Exit the function and prevent further execution
+      }
+
+      if (password.length < 10) {
+         // Display an error message or take appropriate action
+         alert('Password must be at least 10 characters long');
+         return; // Exit the function and prevent further execution
+      }
+
+      if (password !== reenterPassword) {
+         // Display an error message or take appropriate action
+         alert('Passwords do not match');
+         return; // Exit the function and prevent further execution
+      }
+
+
+
+
+    fetch('signupdetails.json?' + Date.now())
+    .then(response => response.json())
+    .then(data => {
+console.log('try')
+      const loggedInUser = data.find(user => user.user === username);
+
+
+  if (loggedInUser) {
+  // User is found, perform the desired actions
+  alert('Username already exsist');
+
+} else {
+  console.log(username);
+  document.cookie = "user=" + encodeURIComponent(username);
+  document.cookie = "pass=" + encodeURIComponent(password);
+  document.cookie = "userType=" + encodeURIComponent(userType);
+  document.cookie = "phone=" + encodeURIComponent(phone);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      // Do something with the response
+    }
+  };
+  xhttp.open("POST", "signup.php", true);
+  xhttp.send();
+  alert("Data added successfully!");
+window.location.href = 'main.html';
+}
+
+
+
+    })
+
+
+
+      })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+[
+    {
+        "user": "admin",
+        "password": "111"
+    },
+    {
+        "user": "akshay",
+        "phone": "9495643214",
+        "password": "aaaaa12345",
+        "usertype": "normal",
+        "favorites": [
+            "2057",
+            "2104",
+            "2100"
+        ],
+        "reports": [
+            {
+                "pointId": "1111",
+                "report": "Station Doesn't Exsist",
+                "date": "2023-06-29"
+            },
+            {
+                "pointId": "1118",
+                "report": "Station Doesn't Exsist",
+                "date": "2023-06-29"
+            },
+            {
+                "pointId": "853",
+                "report": "Station Occupied",
+                "date": "2023-07-05"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 1118",
+                "date": "2023-06-29"
+            },
+            {
+                "notification": "thanks for reporting 853",
+                "date": "2023-07-05"
+            }
+        ],
+        "report_count": 3
+    },
+    {
+        "user": "kseb",
+        "phone": "1234567890",
+        "password": "kkkkk12345",
+        "usertype": "owner"
+    },
+    {
+        "user": "victorjj",
+        "phone": "1234567890",
+        "password": "tren1234567888999",
+        "usertype": "normal",
+        "favorites": [
+            "2057"
+        ],
+        "reports": [
+            {
+                "pointId": "2057",
+                "report": "Slow",
+                "date": "2023-06-18"
+            },
+            {
+                "pointId": "1111",
+                "report": "Defective",
+                "date": "2023-06-18"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "Removed the chatgrpoint you have reported2057",
+                "date": "2023-06-18"
+            },
+            {
+                "notification": "thanks for reporting 1111",
+                "date": "2023-06-18"
+            }
+        ],
+        "report_count": 2
+    },
+    {
+        "user": "rahul",
+        "phone": "4545121777",
+        "password": "123456789a",
+        "usertype": "normal",
+        "favorites": [
+            "1111"
+        ],
+        "reports": [
+            {
+                "pointId": "1111",
+                "report": "Station Doesn't Exsist",
+                "date": "2023-06-18"
+            },
+            {
+                "pointId": "851",
+                "report": "Unhygienic",
+                "date": "2023-06-18"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 1111",
+                "date": "2023-06-18"
+            },
+            {
+                "notification": "thanks for reporting 851",
+                "date": "2023-06-18"
+            }
+        ],
+        "report_count": 2
+    },
+    {
+        "user": "Athul",
+        "phone": "1234567892",
+        "password": "thanks123456",
+        "usertype": "normal",
+        "favorites": [
+            "1543"
+        ],
+        "reports": [
+            {
+                "pointId": "1543",
+                "report": "Defective",
+                "date": "2023-06-19"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 1543",
+                "date": "2023-06-19"
+            }
+        ],
+        "report_count": 1
+    },
+    {
+        "user": "shamil",
+        "phone": "8943668355",
+        "password": "shamil1234",
+        "usertype": "normal",
+        "favorites": [
+            "245",
+            "1005"
+        ],
+        "reports": [
+            {
+                "pointId": "1118",
+                "report": "Station Occupied",
+                "date": "2023-06-19"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 1118",
+                "date": "2023-06-19"
+            }
+        ],
+        "report_count": 1
+    },
+    {
+        "user": "vic",
+        "phone": "1234560000",
+        "password": "victor12345",
+        "usertype": "normal",
+        "reports": [
+            {
+                "pointId": "245",
+                "report": "Defective",
+                "date": "2023-06-19"
+            },
+            {
+                "pointId": "851",
+                "report": "Slow",
+                "date": "2023-06-19"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 245",
+                "date": "2023-06-19"
+            },
+            {
+                "notification": "thanks for reporting 851",
+                "date": "2023-06-19"
+            }
+        ],
+        "report_count": 2
+    },
+    {
+        "user": "akshay babu",
+        "phone": "3547484899",
+        "password": "titanium12345",
+        "usertype": "normal"
+    },
+    {
+        "user": "Basil Baby",
+        "phone": "3254266462",
+        "password": "basilbab12",
+        "usertype": "normal"
+    },
+    {
+        "user": "basilbabyy",
+        "phone": "1241353511",
+        "password": "bbbbb12345",
+        "usertype": "normal",
+        "favorites": [
+            "1005"
+        ],
+        "reports": [
+            {
+                "pointId": "704",
+                "report": "Defective",
+                "date": "2023-06-20"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 704",
+                "date": "2023-06-20"
+            }
+        ],
+        "report_count": 1
+    },
+    {
+        "user": "Jhonny",
+        "phone": "3333221111",
+        "password": "aaaaa11111",
+        "usertype": "normal"
+    },
+    {
+        "user": "akshay12",
+        "phone": "5353636733",
+        "password": "aaaaa12345",
+        "usertype": "normal",
+        "favorites": [
+            "1997"
+        ],
+        "reports": [
+            {
+                "pointId": "2103",
+                "report": "Unhygienic",
+                "date": "2023-06-20"
+            }
+        ],
+        "notifications": [
+            {
+                "notification": "thanks for reporting 2103",
+                "date": "2023-06-20"
+            }
+        ],
+        "report_count": 1
+    }
+]

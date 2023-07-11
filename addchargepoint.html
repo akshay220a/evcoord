@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ev Charging Station finder</title>
+        <link href="dashboard.css" rel="stylesheet">
+        <!------google icon------>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
+        <!-------routing machine---------------->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+        <!-- Leaflet.markercluster JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+
+            <style>
+            .material-symbols-outlined {
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 400,
+              'GRAD' 0,
+              'opsz' 48
+            }
+            #map{
+                height:100%;
+                width:100%;
+                z-index: 8;
+            }
+
+            .addchargepoint-sidebar{
+                position: absolute;
+                top:85px;
+                right:0;
+                height: calc(100% - 85px);
+                z-index: 21;
+                width:500px;
+                background-color: white;
+            }
+            .addchargepoint-sidebar h2{
+                font-size: 2em;
+                font-weight: 300;
+            }
+            .addchargepoint-sidebar h3{
+                font-size: 1.4em;
+                font-weight: 300;
+            }
+            .addchargepoint-hero{
+
+                margin: 30px;
+
+            }
+            .addchargepoint-main{
+                margin-top: 10px;
+            }
+            .add-input{
+                margin:20px 0 10px 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .add-input label{
+                font-size: 1.1em;
+                padding: 6px;
+            }
+            .add-input input{
+                font-size: 1.1em;
+                padding: 4px;
+                border:none;
+                border-bottom: 1px solid grey;
+            }
+            .add-input input:focus{
+                outline: none;
+            }
+            .add-dropdown {
+                display: flex;
+            }
+            .add-dropdown select{
+                font-size: 1em;
+                padding: 0;
+                height: 30px;
+
+            }
+            .add-dropdown img{
+                width:140px;
+                mix-blend-mode: multiply;
+                margin-right: 10px;
+                object-fit: contain;
+            }
+            .addchargepoint-btn{
+                background-color: #18d1ae;
+                font-size: 1.4em;
+                padding: 5px 30px ;
+                border: none;
+                color: aliceblue;
+                margin-top: 10px;
+            }
+            .addchargepoint-btn:hover{
+                background-color: #149c83;
+            }
+            .add-input:focus~.add-input label{
+                transform: translateY(10px);
+            }
+            </style>
+    </head>
+    <body>
+        <div class="dashboard">
+            <div class="dashboard-header">
+                <div class="dashboard-header1">
+                    <div class="dashboard-logo">
+                        <h1>EV<span>CONNECT</span></h1><img src="images/logo.jpg">
+                    </div>
+                    <div class="profile">
+                        <ul>
+                            <li>LOGIN</li>
+                            <li>SIGN UP</li>
+                        </ul>
+                        <img src="images/profile.png">
+                    </div>
+                </div>
+                <div class="dashboard-header2">
+                    <ul>
+                        <li>HOME</li>
+                        <li>ADD CHARGING-POINT</li>
+                        <li>PROFILE</li>
+                        <li><img src="images/fb.png"></li>
+                        <li><img src="images/insta.png"></li>
+                        <li style="border-right:  1px solid grey;"><img src="images/link.png"></li>
+                    </ul>
+                    <div  class="show-sidebar">
+                        <img onclick="showsidebar()" class="show-sidebar-icon" src="images/comment.png">
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-footer">
+                <div id="map"></div>
+                <div class="addchargepoint-sidebar">
+                    <div class="addchargepoint-hero">
+                        <div class="addchargepoint-header">
+                            <h2>AddChargepoint</h2>
+                        </div>
+                        <div class="addchargepoint-main">
+                            <div class="addchargepoint-form">
+                                <form method="POST" action="" class="form" onsubmit="enableNextButton()">
+                                  <h3>Move Pin to Address</h3>
+                                  <div class="add-input">
+                                    <label for="location-name" id="location-label">Station name*</label>
+                                    <input type="text" id="location-name" placeholder="Station name*" required>
+                                  </div>
+                                  <div class="add-input">
+                                    <label for="address" id="address-label">Address*</label>
+                                    <input type="text" id="address" placeholder="Address*" required>
+                                  </div>
+                                    <div class="add-dropdown">
+                                        <img id="charge-image" src="images/chargepoint/default.png">
+                                        <div style="display: flex;flex-direction: column;justify-content: space-around;">
+                                            <select id="charge-dropdown">
+                                                <option value="unknown">unknown</option>
+                                                <option value="CCS1">CCS1</option>
+                                                <option value="CHAdeMO">CHAdeMO</option>
+                                                <option value="CCS2">CCS2</option>
+                                                <option value="GB/T">GB/T</option>
+                                                <option value="Tesla">Tesla</option>
+                                                <option value="J1772 (Type 1)">J1772 (Type 1)</option>
+                                                <option value="Mennekes (Type 2)">Mennekes (Type 2)</option>
+                                            </select>
+                                            <select>
+                                                <option value="home">HOME</option>
+                                                <option value="home">COMPANY</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="add-input">
+                                        <label>Owner name*</label>
+                                        <input type="text" id="owner-name" placeholder="Owner name*">
+                                    </div>
+                                    <div class="add-input">
+                                        <label>Owner's Phone No*</label>
+                                        <input type="text" id="owner-phno" placeholder="Owner's Phone No*">
+                                    </div>
+                                    <button type="button" class="addchargepoint-btn">SUBMIT</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+const dropdown = document.getElementById('charge-dropdown');
+const carImage = document.getElementById('charge-image');
+
+// Add an event listener to the drop-down list
+dropdown.addEventListener('change', function() {
+  // Get the selected option value
+  const selectedCar = dropdown.value;
+
+  // Set the image source based on the selected option
+  if (selectedCar === 'unknown') {
+    carImage.src = 'images/chargepoint/default.png';
+  } else if (selectedCar === 'CCS1') {
+    carImage.src = 'images/chargepoint/ccs1.jpg';
+  } else if (selectedCar === 'CHAdeMO') {
+    carImage.src = 'images/chargepoint/chademo.jpg';
+  } else if (selectedCar === 'CCS2') {
+    carImage.src = 'images/chargepoint/ccs2.jpg';
+  }else if (selectedCar === 'GB/T') {
+    carImage.src = 'images/chargepoint/gbt.jpg';
+  }else if (selectedCar === 'Tesla') {
+    carImage.src = 'images/chargepoint/tesla.jpg';
+  }else if (selectedCar === 'J1772 (Type 1)') {
+    carImage.src = 'images/chargepoint/j1772.jpg';
+  }else if (selectedCar === 'Mennekes (Type 2)') {
+    carImage.src = 'images/chargepoint/mennekes.jpg';
+  }
+});
+
+let mapOptions = {
+    center: [11.30236, 75.87471],
+    zoom: 10,
+  };
+  
+  function reverseGeocode(latlng) {
+    fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latlng.lat}&lon=${latlng.lng}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Update the state and address fields in the form
+        document.getElementById("address").value = data.display_name;
+        console.log(data.address.state);
+      })
+      .catch((error) => console.error(error));
+  }
+  
+  let map = new L.map("map", mapOptions);
+  
+  let layer= L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
+    maxZoom: 20,
+    minZoom: 4,
+  subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+}).addTo(map);
+  
+  let iconOptions = {
+    title: "YOU",
+    draggable: true,
+  };
+  
+  let marker = new L.Marker([11.30236, 75.87471], iconOptions);
+  
+  map.on("click", (event) => {
+    if (marker !== null) {
+      map.removeLayer(marker);
+    }
+    marker = L.marker([event.latlng.lat, event.latlng.lng], iconOptions).addTo(
+      map
+    );
+    const lat = event.latlng.lat;
+    const lng = event.latlng.lng;
+  
+    reverseGeocode(event.latlng);
+  });
+
+
+  
+        </script>
+    </body>
+</html>
